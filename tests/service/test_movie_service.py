@@ -1,8 +1,6 @@
 import unittest
 from unittest.mock import patch
-import json
 from src.domain.movie_classifier import MovieClassifier
-from src.models.movie import Movie
 from src.helpers.playlists import MoviePlaylist
 from src.service.movie_service import MovieService
 
