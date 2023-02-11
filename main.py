@@ -1,5 +1,6 @@
 from src.service.movie_service import MovieService
 
+
 def main():
     while True:
         print("Select an option:")
@@ -9,7 +10,7 @@ def main():
         print("4. Quit")
         service = MovieService()
         choice = int(input("Enter your choice: "))
-        
+
         if choice == 1:
             sort = input("Do you want to sort by top/down: ")
             if sort == "top":
@@ -31,6 +32,7 @@ def main():
         elif choice == 4:
             break
         service = MovieService()
+
 
 if __name__ == "__main__":
     main()
