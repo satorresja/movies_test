@@ -1,4 +1,5 @@
 import json
+from typing import List, Optional
 
 from src.domain.movie_classifier import MovieClassifier
 from src.helpers.playlists import MoviePlaylist
@@ -7,11 +8,10 @@ from src.models.movie import Movie
 
 class MovieService:
     def __init__(self) -> None:
-        movies_data = []
         with open("data/movies.json", "r") as file:
             movies_data = json.load(file)
 
-        self.movies = [
+        self.movies: List[Movie] = [
             Movie(
                 title=movie_data["title"],
                 genres=movie_data["genres"],
@@ -20,25 +20,24 @@ class MovieService:
             )
             for movie_data in movies_data
         ]
+        self.classifier: MovieClassifier = MovieClassifier(self.movies)
 
-    def playlist(self, rating, genre, actors, it_forward):
-        classifier = MovieClassifier(self.movies)
-        playlist = MoviePlaylist(classifier)
+    def playlist(self, rating, genre, actors, it_forward) -> None:
+        pass
 
-    def playlist_by_popularity(self, sort):
-        classifier = MovieClassifier(self.movies)
-        movies = classifier.classify_by_popularity(sort)
+    def playlist_by_popularity(self, sort: Optional[bool] = True) -> None:
+        movies = self.classifier.classify_by_popularity(sort)
         playlist = MoviePlaylist(movies)
         playlist.show_movies()
 
-    def playlist_by_similar_movies(self, genre=None, actor=None):
-        classifier = MovieClassifier(self.movies)
-        movies = classifier.classify_by_similar_movies(genre, actor)
+    def playlist_by_similar_movies(
+        self, genre: Optional[str] = None, actor: Optional[str] = None
+    ) -> None:
+        movies = self.classifier.classify_by_similar_movies(genre, actor)
         playlist = MoviePlaylist(movies)
         playlist.show_movies()
 
-    def playlist_by_actors(self, actor):
-        classifier = MovieClassifier(self.movies)
-        movies = classifier.classify_by_same_actor(actor)
+    def playlist_by_actors(self, actor: Optional[str] = None) -> None:
+        movies = self.classifier.classify_by_same_actor(actor)
         playlist = MoviePlaylist(movies)
         playlist.show_movies()
