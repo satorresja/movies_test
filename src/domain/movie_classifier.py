@@ -8,7 +8,11 @@ class MovieClassifier:
         self.movies = movies
 
     def classify_by_popularity(self, top: Optional[bool] = True) -> List[Movie]:
-        return sorted(self.movies, key=lambda x: x.imdb_rating, reverse=top)
+        return sorted(
+            self.movies,
+            key=lambda x: x.imdb_rating,
+            reverse=top if top is not None else True,
+        )
 
     def _classify_by_attribute(self, attr: str, value: Optional[str]) -> List[Movie]:
         similar_movies = []

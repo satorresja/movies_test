@@ -8,7 +8,7 @@ from src.models.movie import Movie
 
 class MovieService:
     def __init__(self) -> None:
-        with open("data/movies.json", "r") as file:
+        with open("data/movies.json", "r", encoding="utf-8") as file:
             movies_data = json.load(file)
 
         self.movies: List[Movie] = [
